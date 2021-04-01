@@ -34,12 +34,4 @@ def login():
 
 app.run(host='localhost', port= 5000)
 
-#Executing SQL Statements
-#cursor.execute('''CREATE TABLE seller_table (id INTEGER, first_name VARCHAR(30), last_name VARCHAR(30), email VARCHAR(100), password VARCHAR(30))''')
-#cursor.execute(''' INSERT INTO seller_table VALUES(100000, 'Liana', 'Coyle', 'lianacoyle@gmail.com', 'password')''')
-
-#Saving the actions performed on the DB
-#mysql.connection.commit()
-
-#Closing the cursor
-#cursor.close()
+#just adding this comment to show a change on git
