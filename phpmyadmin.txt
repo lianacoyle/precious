@@ -2,3 +2,184 @@
 -- To import: Open with Notepad++, select 'save as' and change the file extension to .sql
 -- Follow instructions for importing database to phpmyadmin
 
+-- phpMyAdmin SQL Dump
+-- version 5.1.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 07, 2021 at 01:50 AM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `precious`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `idcart` int(11) NOT NULL,
+  `create_time` datetime DEFAULT current_timestamp(),
+  `update_time` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  `iduser` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cartdetails`
+--
+
+CREATE TABLE `cartdetails` (
+  `idcartdetails` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `extended_price` decimal(7,2) NOT NULL,
+  `idcart` int(11) NOT NULL,
+  `iditem` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `idcategory` int(11) NOT NULL,
+  `category_name` varchar(100) NOT NULL,
+  `category_desc` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item`
+--
+
+CREATE TABLE `item` (
+  `iditem` int(11) NOT NULL,
+  `image` longblob NOT NULL,
+  `item_name` varchar(100) NOT NULL,
+  `idcategory` int(11) NOT NULL,
+  `item_desc` varchar(255) NOT NULL,
+  `price` decimal(7,2) NOT NULL,
+  `create_time` datetime DEFAULT current_timestamp(),
+  `update_time` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  `iduser` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `iduser` int(11) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `vendor_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `create_time` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`iduser`, `first_name`, `last_name`, `email`, `password`, `vendor_flag`, `create_time`) VALUES
+(0, 'Some', 'One', 'mail', 'password', 1, NULL),
+(1000, 'Some', 'One', 'mail', 'password', 1, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`idcart`),
+  ADD KEY `cart_user_idx` (`iduser`) USING BTREE;
+
+--
+-- Indexes for table `cartdetails`
+--
+ALTER TABLE `cartdetails`
+  ADD PRIMARY KEY (`idcartdetails`),
+  ADD KEY `cartdetails_item_idx` (`iditem`),
+  ADD KEY `cartdetails_cart_idx` (`idcart`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`idcategory`);
+
+--
+-- Indexes for table `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`iditem`),
+  ADD KEY `item_category_idx` (`idcategory`),
+  ADD KEY `user_item_idx` (`iduser`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`iduser`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `cartdetails`
+--
+ALTER TABLE `cartdetails`
+  MODIFY `idcartdetails` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_user_idx` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `cartdetails`
+--
+ALTER TABLE `cartdetails`
+  ADD CONSTRAINT `cartdetails_cart_idx` FOREIGN KEY (`idcart`) REFERENCES `cart` (`idcart`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `cartdetails_item_idx` FOREIGN KEY (`iditem`) REFERENCES `item` (`iditem`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `item`
+--
+ALTER TABLE `item`
+  ADD CONSTRAINT `item_category_idx` FOREIGN KEY (`idcategory`) REFERENCES `category` (`idcategory`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `user_item_idx` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
