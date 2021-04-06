@@ -1,0 +1,4 @@
+-- This file will be used to store the database creation file for phpmyadmin. 
+-- To import: Open with Notepad++, select 'save as' and change the file extension to .sql
+-- Follow instructions for importing database to phpmyadmin
+
