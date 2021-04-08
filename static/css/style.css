@@ -1,0 +1,65 @@
+.sub-headers{
+    text-decoration: none;
+    text-align: center;
+    font-size: 40px;
+    font-family: "Cursive", "Brush Script MT";
+    color: #000000;
+}
+
+.contactus {
+    position: relative;
+    top: 15%;
+    right: 15%;
+    text-align: center;
+    font-size: 4rem;
+}
+
+.contactustext {
+    position: relative;
+    top: 15%;
+    right: 15%;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.contactuspage{
+    position: absolute;
+    right: 0%;
+    background-image: url('/static/imgs/cameracontactus.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.link{
+    text-decoration: none;
+}
+
+.lefthometext{
+    text-align: center;
+    font-size: 3rem;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%);
+}
+
+.split.left{
+    left:0;
+    background-image: url('/static/imgs/Gradient_builder_2.jpg');
+    background-size: cover;
+}
+.split.right{
+    right:0;
+    background-image: url('/static/imgs/New_Flying_City.jpg');
+    background-size: cover;
+}
+
+.split {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
