@@ -10,8 +10,20 @@ from flask_sqlalchemy import SQLAlchemy
 #from PIL import image 
 import os
 
+
+from flask import  url_for 
+from werkzeug.utils import secure_filename
+from config import *
+import sys,os,re  
+#i have added the above imports (Sandra)
+
+
+UPLOAD_FOLDER = '/precious/static/imgs'
+ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
+
 app = Flask(__name__)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #Database attributes for connection
 # will move credentials to separate config file later 
 conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format('root', '','localhost','precious')
@@ -151,7 +163,6 @@ def logout():
 def uco():
 	return render_template('userCheckout.html')
 
-
 # user upload page
 
 def allowed_file(filename):
@@ -165,6 +176,11 @@ def upload_form():
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload():
+    if request.method == 'POST':
+      f = request.files['file']
+      f.save(secure_filename(f.filename))
+      return render_template('home.html')
+    '''
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -181,14 +197,14 @@ def upload():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('upload_form',filename=filename))
     return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+  #  <!doctype html>
+  #  <title>Upload new File</title>
+   # <h1>Upload new File</h1>
+   # <form method=post enctype=multipart/form-data>
+    #  <input type=file name=file>
+    #  <input type=submit value=Upload>
+   # </form>
+
 
 # shooping cart page
 @app.route("/scn") 
