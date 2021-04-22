@@ -1,10 +1,7 @@
 #run in cmd terminal: 
-# python -m pip install flask-sqlalchemy
-# python -m pip install pymysql
-# python -m pip install Pillow
+# python -m pip install {library name}
 
 
-from flask import Flask, render_template, request, redirect, flash, url_for
 from flask import Flask, render_template, request, redirect
 import os
 from flask import  url_for 
@@ -43,36 +40,7 @@ class Items:
     def get_list(self):
         return self.items
 #creating an empty list for Photo objects
-items = Items()
-#instantiating Photo objects and adding them to list of photos
-pic1 = Item("Paper Lantern Alley", 10.00, 'pic1.jpg', '', "Some interesting description here")
-items.add(pic1)
-pic2 = Item("Rainy Street Glimmer", 15.00, 'pic2.jpg')
-items.add(pic2)
-pic3 = Item("Tax Free Night Sign", 12.00, 'pic3.jpg')
-items.add(pic3)
-pic4 = Item("Baby Pandas", 11.00, 'pic4.jpg')
-items.add(pic4)
-pic5 = Item("Pink Sky Mountain", 16.00, 'pic5.jpg')
-items.add(pic5)
-print(items)
-
-from werkzeug.utils import secure_filename
-
-
-class Item:
-    def __init__(self, photo_name, price, file_name, category=None, item_desc=None):
-        self.item_name = photo_name
-        self.category = category
-        self.item_desc = item_desc
-        self.price = price
-        self.file_name = file_name
-        self.tn_file_name = None
-
-
-#creating an empty list for Photo objects
 items = []
-
 #instantiating Photo objects and adding them to list of photos
 pic1 = Item("Paper Lantern Alley", 10.00, 'pic1.jpg', '', "Some interesting description here")
 items.append(pic1)
@@ -84,7 +52,7 @@ pic4 = Item("Baby Pandas", 11.00, 'pic4.jpg')
 items.append(pic4)
 pic5 = Item("Pink Sky Mountain", 16.00, 'pic5.jpg')
 items.append(pic5)
-
+print(items)
 
 app = Flask(__name__)
 
@@ -92,23 +60,23 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/precious")
 def precious():
-	return render_template('home.html')
+    return render_template('home.html')
 
-@app.route('/form')
-def form():
-    return render_template('form.html')
+@app.route('/DevPage')
+def DevPage():
+    return render_template('Dev_Page.html')
 
 @app.route("/phot")
 def phot():
-	return "Photography"
+    return "Photography"
 
 @app.route("/contact")
 def contact():
-	return render_template('Contactus.html')
+    return render_template('Contactus.html')
 
 @app.route("/me")
 def me():
-	return "PM"
+    return "PM"
 
 
 @app.route("/des")
@@ -121,21 +89,21 @@ def shopping():
 
 @app.route("/profile")
 def profile():
-	return "profile"
+    return "profile"
 
 @app.route("/login")
 def login():
-	return render_template('login.html')
+    return render_template('login.html')
 
 @app.route("/logout")
 def logout():
-	return "You have completed a successful logout!"
+    return "You have completed a successful logout!"
 
 # user checkout page
 @app.route("/ucos")
 @app.route("/userCheckout")
 def uco():
-	return render_template('userCheckout.html')
+    return render_template('userCheckout.html')
 
 # user upload page
 
@@ -146,7 +114,7 @@ def allowed_file(filename):
 @app.route("/uua") 
 @app.route('/userUpload')
 def upload_form():
-	return render_template('userUpload.html')
+    return render_template('userUpload.html')
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload():
@@ -170,7 +138,7 @@ def upload():
             item_fname = file.filename
             name = "item" + str(1)
             name = Item(item_name, item_namep, item_fname,'', item_namedes)
-            items.add(name)
+            items.append(name)
             return redirect(url_for('upload_form',filename=filename))
         
     return "Congratulations Upload Complete"
@@ -188,9 +156,9 @@ def upload():
 @app.route("/scn") 
 @app.route('/shoppingCart')
 def upload_cart():
-	return render_template('shoppingCart.html')
+    return render_template('shoppingCart.html')
           
 if __name__ == '__main__':
-		app.run(debug=True)
+    app.run(debug=True)
 
-app.run(host='localhost', port= 5000)
+app.run(host='localhost', port=5000)
