@@ -26,23 +26,33 @@ class Item:
         self.price = price
         self.file_name = file_name
         self.tn_file_name = None
+    
 
 
+class Items:
+   
+    def __init__(self):
+        self.items = []
+
+    def add(self, item):
+        self.items.append(item)
+    
+    def get_list(self):
+        return self.items
 #creating an empty list for Photo objects
-items = []
-
+items = Items()
 #instantiating Photo objects and adding them to list of photos
 pic1 = Item("Paper Lantern Alley", 10.00, 'pic1.jpg', '', "Some interesting description here")
-items.append(pic1)
+items.add(pic1)
 pic2 = Item("Rainy Street Glimmer", 15.00, 'pic2.jpg')
-items.append(pic2)
+items.add(pic2)
 pic3 = Item("Tax Free Night Sign", 12.00, 'pic3.jpg')
-items.append(pic3)
+items.add(pic3)
 pic4 = Item("Baby Pandas", 11.00, 'pic4.jpg')
-items.append(pic4)
+items.add(pic4)
 pic5 = Item("Pink Sky Mountain", 16.00, 'pic5.jpg')
-items.append(pic5)
-
+items.add(pic5)
+print(items)
 
 app = Flask(__name__)
 
@@ -128,7 +138,7 @@ def upload():
             item_fname = file.filename
             name = "item" + str(1)
             name = Item(item_name, item_namep, item_fname,'', item_namedes)
-            items.append(name)
+            items.add(name)
             return redirect(url_for('upload_form',filename=filename))
         
     return "Congratulations Upload Complete"
