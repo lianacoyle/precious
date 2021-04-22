@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Shopping</title>
-    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
 
@@ -29,33 +30,31 @@
     <!-- For demo purpose -->
     <div class="row py-5">
       <div class="col-lg-12 mx-auto">
-        <div class="text-white p-5 shadow-sm rounded banner">
+        
           <h1 class="heading">Browse Photo Gallery</h1>
 
         </div>
-      </div>
+      
     </div>
     <!-- End -->
 
-{% for photo in photos %}
+{% for item in items %}
 <div class="container-fluid">
   <div class="px-lg-5">
 
     <div class="row">
       <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="{{url_for('static', filename=photo.file_name)}}" alt="" class="photos">
+      
+        <div class="bg-white rounded shadow-sm"><img src="{{url_for('static', filename= 'imgs/' + item.file_name)}}" alt="" class="photos">
           <div class="p-4">
-            <h2> <a href="#" class="photo-title">{{photo.photo_name}}</a></h2>
-            <p class="photo-desc">{{photo.item_desc}}</p>
-            <div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-                <p class="photo-desc">Photo by <a href="#" class="text-reset">
+            <h2> <a href="#" class="photo-title">{{item.item_name}}</a></h2>
+            <p class="photo-desc">{{item.item_desc}}</p>
+            <p class="photo-desc">Photo by <a href="#" class="text-reset">
                         Link to seller page here</a></p>
-              <p  class="photo-desc"><span class="font-weight-bold">Price: ${{"{:,.2f}".format(photo.price)}}</span></p>
+              <p  class="photo-desc"><span class="font-weight-bold">Price: ${{"{:,.2f}".format(item.price)}}</span></p>
             </div>
           </div>
-        </div>
-      </div>
+      
       <!-- End -->
 
     </div>
@@ -65,4 +64,5 @@
 {% endfor %}
 
 </body>
+{% endblock content %}
 </html>

@@ -18,9 +18,13 @@
    <body>
       <form action = "http://localhost:5000/uploader" method = "POST" 
          enctype = "multipart/form-data">
-         <input type = "file" name = "file" />
+         <p>Upload Picture <input type = "file" name = "file" /></p>
+         <p>Photo Name <input type = "text" name = "title"></p>  
+         <p>Photo Description <input type = "text" name = "description"></p>
+         <p>Photo Price <input type = "text" name = "price"></p>
          <input type = "submit"/>
-      </form>   
+      </form>
    </body>
-   {% endblock content %}
+   
+{% endblock content %}
 </html>
