@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 
 from forms import RegistrationForm, LoginForm
-
+from flask_bcrypt import Bcrypt
 
 UPLOAD_FOLDER = 'static/imgs'
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
@@ -23,8 +23,10 @@ app.secret_key = "secret"
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sqlite.db'
-#app.config['SLQALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET KEY'] = 'sdkjlfhgkldngouiewj'
+app.config['SLQALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app) 
+bcrypt = Bcrypt(app)
 
 
 class User(db.Model):
@@ -210,10 +212,10 @@ def register():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate():
         hash_password = bcrypt.generate_password_hash(form.password.data)
-        user = User(name=form.name.data,username=form.username.data, email=form.email.data, password=hash_password)
+        user = User(first_name=form.first_name.data,last_name=form.last_name.data,username=form.username.data, email=form.email.data, password=hash_password)
         db.session.add(user)
         db.session.commit()
-        flash(f'Welcome {form.name.data} Thank you for registering','success')
+        flash(f'Welcome {form.first_name.data} Thank you for registering','success')
         return redirect(url_for('precious'))
     return render_template('register.html', form=form, title="Registration page")
 
