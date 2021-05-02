@@ -12,6 +12,8 @@ import sys,os,re
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 
+from forms import RegistrationForm, LoginForm
+
 
 UPLOAD_FOLDER = 'static/imgs'
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
@@ -203,9 +205,32 @@ def viewUsers():
 def profile():
     return "profile"
 
-@app.route("/login")
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        hash_password = bcrypt.generate_password_hash(form.password.data)
+        user = User(name=form.name.data,username=form.username.data, email=form.email.data, password=hash_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Welcome {form.name.data} Thank you for registering','success')
+        return redirect(url_for('precious'))
+    return render_template('register.html', form=form, title="Registration page")
+
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm(request.form)
+    if request.method =="POST" and form.validate():
+        user = User.query.filter_by(email = form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            session['email'] = form.email.data
+            flash(f'Welcome {form.email.data} You are logged in now', 'success')
+            return redirect(request.args.get('next') or url_for('precious'))
+        else:
+            flash ('Wrong Password please try again', 'danger')
+
+    return render_template('login.html', form=form, title="Login Page")
+
 
 @app.route("/logout")
 def logout():
@@ -263,15 +288,15 @@ def upload():
 def viewItems():
     return render_template('viewItems.html', values=Item.query.all())
 
-    '''
-  #  <!doctype html>
-  #  <title>Upload new File</title>
-   # <h1>Upload new File</h1>
-   # <form method=post enctype=multipart/form-data>
-    #  <input type=file name=file>
-    #  <input type=submit value=Upload>
-   # </form>
-'''
+#     '''
+#   #  <!doctype html>
+#   #  <title>Upload new File</title>
+#    # <h1>Upload new File</h1>
+#    # <form method=post enctype=multipart/form-data>
+#     #  <input type=file name=file>
+#     #  <input type=submit value=Upload>
+#    # </form>
+# '''
 
 # shopping cart page
 @app.route("/scn") 

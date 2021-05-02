@@ -1,11 +1,28 @@
-<!DOCTYPE html>
 {% extends "layout.html" %}
 {% block content %}
-<h1>Login</h1>
-    <p>Type in your info</p>
-    username:
-    <input type="text">
-    password:
-    <input type="password">
-    <a href=../profile><button>Login</button></a>
+
+<div class="container">
+    {% from "_formhelpers.html" import render_field %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+    <div class="text-center h1 text-danger">Login</div>
+    {% include '_messages.html' %}
+    <form method="post" enctype="multipart/form-data">
+        <div>
+            {{ render_field(form.email, class_="form-control") }}
+            {{ render_field(form.password, class_="form-control") }}
+        </div>
+
+        <p><input type=submit value="Login" class="btn btn-info mt-2"></p>
+    
+    </form>
+</div>
+    <div class="col-md-4"></div>
+
+</div>
+</div>
+
+
 {% endblock content %}
