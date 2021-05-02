@@ -1,4 +1,12 @@
+#Author: Liana Coyle
+'''
+Running just this module one time will create a sqlite database file (precious.db) locally within the project folder.
+If any changes are made to the table attributes, delete the database file and run this module again.
+'''
+
+
 import sqlite3
+from sqlite3 import Error
 
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -9,9 +17,9 @@ def create_connection(db_file):
     conn = None
     try:
         conn = sqlite3.connect(db_file)
-        return conn
-    except ConnectionError:
-        print("Unable to create connection")
+
+    except Error as e:
+        print(e)
 
     return conn
 
@@ -22,12 +30,11 @@ def create_table(conn, create_table_sql):
     :return:
     """
 
-
     try:
         c = conn.cursor()
         c.execute(create_table_sql)
-    except:
-        print("Unable to create table")
+    except Error as e:
+        print(e)
 
 def create_tables():
     database = r"precious.db"
@@ -100,5 +107,5 @@ def create_tables():
         print("Error! cannot create the database connection.")
 
 
-
+# call the create_tables method to create all the tables
 create_tables()

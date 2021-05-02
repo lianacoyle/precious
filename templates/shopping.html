@@ -45,9 +45,9 @@
     <div class="row">
       <!-- Gallery item -->
       
-        <div class="bg-white rounded shadow-sm"><img src="{{url_for('static', filename= 'imgs/' + item.file_name)}}" alt="" class="photos">
+        <div class="bg-white rounded shadow-sm"><img src="{{url_for('static', filename= 'imgs/' + item.filename)}}" alt="" class="photos">
           <div class="p-4">
-            <h2> <a href="#" class="photo-title">{{item.item_name}}</a></h2>
+            <h2> <a href="http://localhost:5000/shopping/{{item.itemid}}" class="photo-title">{{item.item_name}}</a></h2>
             <p class="photo-desc">{{item.item_desc}}</p>
             <p class="photo-desc">Photo by <a href="#" class="text-reset">
                         Link to seller page here</a></p>
